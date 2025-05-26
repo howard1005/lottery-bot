@@ -7,7 +7,8 @@ class Notification:
 
         result = body.get("result", {})
         if result.get("resultMsg", "FAILURE").upper() != "SUCCESS":  
-            return
+            fail_msg = f"로또 구매에 실패했습니다."
+            self._send_discord_webhook(webhook_url, fail_msg)
 
         lotto_number_str = self.make_lotto_number_message(result["arrGameChoiceNum"])
         message = f"{result['buyRound']}회 로또 구매 완료 :moneybag: 남은잔액 : {body['balance']}\n```{lotto_number_str}```"
@@ -30,7 +31,8 @@ class Notification:
     def send_win720_buying_message(self, body: dict, webhook_url: str) -> None:
         
         if body.get("resultCode") != '100':  
-            return       
+            fail_msg = f"연금복권 구매에 실패했습니다."
+            self._send_discord_webhook(webhook_url, fail_msg)       
 
         win720_round = body.get("resultMsg").split("|")[3]
 
