@@ -18,7 +18,9 @@ jobs:
       - run: pip install -r requirements.txt
       
       - name: Run Scripts
-        run: make buy
+        run: |
+          echo $COUNT
+          make buy
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
